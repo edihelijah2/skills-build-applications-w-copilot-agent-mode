@@ -26,8 +26,14 @@ SECRET_KEY = 'django-insecure-!n3r#@@#jkogi597wcl+hv%+2!szr)da#6$r8f+rt1a=lmzql!
 DEBUG = True
 
 
-# Allow all hosts
-ALLOWED_HOSTS = ['*']
+
+# Allow codespace URL and localhost
+import os
+codespace_name = os.environ.get('CODESPACE_NAME')
+codespace_host = f"{codespace_name}-8000.app.github.dev" if codespace_name else None
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+if codespace_host:
+    ALLOWED_HOSTS.append(codespace_host)
 
 
 # Application definition
@@ -43,7 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djongo',
     'corsheaders',
-    # Add your app(s) here as you create them
+    'octofit_tracker',  # Register the main app for models
 ]
 
 
